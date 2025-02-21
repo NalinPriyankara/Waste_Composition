@@ -1,0 +1,55 @@
+# Ignore the entire data folder (contains images and labels)
+data/
+
+# Ignore model weights and pre-trained models
+models/
+
+# Ignore training results and outputs
+runs/
+
+# Ignore inference results
+results/
+
+# Ignore Python cache files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Ignore Jupyter notebook checkpoints
+.ipynb_checkpoints/
+
+# Ignore virtual environment files
+venv/
+env/
+.env
+.venv/
+
+# Ignore IDE-specific files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Ignore system-specific files
+.DS_Store
+Thumbs.db
+
+# Ignore log files
+*.log
+
+# Ignore local configuration files
+local_settings.*
+*.local
+
+# Ignore compiled files
+*.class
+*.exe
+*.dll
+*.so
+*.o
+
+# Ignore distribution folders
+dist/
+build/
+*.egg-info/
