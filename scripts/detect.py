@@ -2,12 +2,15 @@ from ultralytics import YOLO
 import cv2
 
 # Load the trained model
-model = YOLO("models/waste_detection.pt")  # Path to your trained model
+model = YOLO("E:/Project/Waste_Composition/runs/detect/waste_detection2/weights/best.pt")  # Path to your trained model
 
-# Perform inference on a test image
-results = model("data/images/test/image201.jpg")  # Replace with your test image path
+# Take image path as user input
+image_path = input("Enter the path to the image: ")
 
-# Display the results
+# Perform inference on the provided image
+results = model(image_path)  # Use the image path provided by the user
+
+# Display and save the results
 for result in results:
     result.show()  # Show the image with bounding boxes
     result.save("results/detection_result.jpg")  # Save the result

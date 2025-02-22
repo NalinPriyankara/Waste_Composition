@@ -6,12 +6,12 @@ if __name__ == '__main__':
 
     # Train the model
     results = model.train(
-        data="data/waste_dataset.yaml",
+        data="E:\Project\Waste_Composition\data\waste_dataset.yaml",
         epochs=50,
         batch=16,
         imgsz=640,
         device=0,  # Use GPU 0
         name="waste_detection",
         workers=0,  # Set workers to 0 to avoid multiprocessing issues
-        emp=False
+        amp=False
     )
