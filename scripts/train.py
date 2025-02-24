@@ -4,7 +4,6 @@ if __name__ == '__main__':
     # Load a pre-trained YOLO model
     model = YOLO("yolov8n.pt")
 
-    # Train the model
     results = model.train(
         data="E:\Project\Waste_Composition\data\waste_dataset.yaml",
         epochs=50,
