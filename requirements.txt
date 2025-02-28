@@ -2,3 +2,5 @@ ultralytics
 opencv-python
 numpy
 matplotlib
+pillow
+tkinter
