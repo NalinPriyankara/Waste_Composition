@@ -8,6 +8,7 @@ app = Flask(__name__)
 
 # Load the trained model
 model = YOLO("models/best.pt")
+print("Model loaded successfully.")
 
 # Global variables for webcam feed
 camera = cv2.VideoCapture(0)  # 0 is usually the default webcam
@@ -23,7 +24,8 @@ def generate_frames():
                 break
 
             # Perform inference on the captured frame
-            results = model(frame)
+            results = model(frame, conf=0.3)  # Lower confidence threshold
+            print("Detection results:", results)  # Debug output
 
             # Annotate the frame with bounding boxes
             annotated_frame = results[0].plot()

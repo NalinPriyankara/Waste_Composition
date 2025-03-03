@@ -9,21 +9,8 @@
 <body>
     <div class="container">
         <h1>Webcam Detection</h1>
-        <video id="webcam" autoplay></video>
-        <button onclick="startWebcam()">Start Webcam</button>
+        <img id="video_feed" src="{{ url_for('video_feed') }}">
         <a href="/"><button>Back to Home</button></a>
     </div>
-
-    <script>
-        async function startWebcam() {
-            const video = document.getElementById('webcam');
-            try {
-                const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-                video.srcObject = stream;
-            } catch (error) {
-                console.error('Error accessing webcam:', error);
-            }
-        }
-    </script>
 </body>
 </html>
