@@ -5,7 +5,7 @@ if __name__ == '__main__':
     model = YOLO("yolov8n.pt")
 
     results = model.train(
-        data="E:\Project\Waste_Composition\data\waste_dataset.yaml",
+        data="E:\Project\Waste_Composition\data\data.yaml",
         epochs=50,
         batch=16,
         imgsz=640,
