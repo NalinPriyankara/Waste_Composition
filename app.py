@@ -7,7 +7,7 @@ import threading
 app = Flask(__name__)
 
 # Load the trained model
-model = YOLO("models/best.pt")
+model = YOLO("models/best1.pt")
 print("Model loaded successfully.")
 
 # Global variables for webcam feed
