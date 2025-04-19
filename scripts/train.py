@@ -2,7 +2,7 @@ from ultralytics import YOLO
 
 if __name__ == '__main__':
     # Load a pre-trained YOLO model
-    model = YOLO("yolo11m.pt")
+    model = YOLO("E:/Project/Waste_Composition/yolov8n.pt")
 
     results = model.train(
         data="E:\Project\Waste_Composition\data\data.yaml",
