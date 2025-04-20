@@ -2,7 +2,7 @@ from ultralytics import YOLO
 
 def run_image_detection(image_path):
     # Load the trained model
-    model = YOLO("models/best1.pt")  # Path to your trained model
+    model = YOLO("models/best.pt")  # Path to your trained model
 
     # Perform inference on the provided image
     results = model(image_path)  # Use the image path provided by the user
