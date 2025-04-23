@@ -2,9 +2,51 @@ from flask import Flask, render_template, Response
 import cv2
 from ultralytics import YOLO
 import threading
+import os
 
 # Initialize Flask app
 app = Flask(__name__)
+
+# Configure upload folder
+UPLOAD_FOLDER = 'data/uploads'
+RESULTS_FOLDER = 'static/results'
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+os.makedirs(RESULTS_FOLDER, exist_ok=True)
+
+# Load the trained model
+model = YOLO("models/best1.pt")  # Update path if needed
+print("Model loaded successfully.")
+
+# ... (keep your existing webcam code) ...
+
+# Route for image upload
+@app.route('/upload', methods=['POST'])
+def upload_image():
+    if 'file' not in request.files:
+        return redirect(request.url)
+    
+    file = request.files['file']
+    if file.filename == '':
+        return redirect(request.url)
+    
+    if file:
+        # Save uploaded file
+        filepath = os.path.join(UPLOAD_FOLDER, file.filename)
+        file.save(filepath)
+        
+        # Process image
+        results = model(filepath)
+        
+        # Save result
+        result_path = os.path.join(RESULTS_FOLDER, 'result.jpg')
+        results[0].save(result_path)
+        
+        return redirect(url_for('result', filename='result.jpg'))
+
+# Route to show result
+@app.route('/result/<filename>')
+def result(filename):
+    return render_template('result.html', result_image=url_for('static', filename=f'results/{filename}'))
 
 # Load the trained model
 model = YOLO("models/best1.pt")
