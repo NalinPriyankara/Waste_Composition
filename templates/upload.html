@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EcoDetect - Waste Classification</title>
+    <title>Upload Image - EcoDetect</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
@@ -21,14 +21,16 @@
     </header>
 
     <main class="container">
-        <section class="hero">
-            <h1>Smart Waste Detection System</h1>
-            <p>Upload an image or use your webcam to automatically classify different types of waste for proper recycling and disposal.</p>
+        <section class="detection-container">
+            <h2 class="detection-title">Upload Waste Image</h2>
             
-            <div class="options">
-                <a href="/upload" class="btn btn-secondary">Upload Image</a>
-                <a href="/webcam" class="btn">Use Webcam</a>
-            </div>
+            <form method="post" enctype="multipart/form-data" class="upload-form">
+                <div class="form-group">
+                    <label for="file">Select an image to analyze:</label>
+                    <input type="file" name="file" id="file" class="form-control" accept="image/*" required>
+                </div>
+                <button type="submit" class="btn">Analyze Image</button>
+            </form>
         </section>
     </main>
 </body>

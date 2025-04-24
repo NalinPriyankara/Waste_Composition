@@ -3,14 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detection Result</title>
+    <title>Results - EcoDetect</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
-    <div class="container">
-        <h1>Detection Result</h1>
-        <img src="{{ result_image }}" alt="Detection Result">
-        <a href="/"><button>Back to Home</button></a>
-    </div>
+    <header>
+        <div class="container header-content">
+            <div class="logo">EcoDetect</div>
+            <nav>
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/upload">Upload</a></li>
+                    <li><a href="/webcam">Webcam</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="detection-container">
+            <h2 class="detection-title">Detection Results</h2>
+            
+            <img src="{{ result_image }}" alt="Detection Result" class="detection-result">
+            
+            <div class="action-buttons">
+                <a href="/upload" class="btn btn-secondary">Analyze Another</a>
+                <a href="/" class="btn">Return Home</a>
+            </div>
+        </section>
+    </main>
 </body>
 </html>
