@@ -11,7 +11,7 @@ app = Flask(__name__, static_folder='static')
 
 # Configure paths
 PROJECT_ROOT = Path(__file__).parent.resolve()
-MODEL_PATH = PROJECT_ROOT / "models" / "best1.pt"
+MODEL_PATH = PROJECT_ROOT / "models" / "best.pt"
 UPLOAD_FOLDER = PROJECT_ROOT / "data" / "uploads"
 RESULTS_FOLDER = PROJECT_ROOT / "static" / "results"
 
