@@ -2,10 +2,10 @@ from ultralytics import YOLO
 
 if __name__ == '__main__':
     # Load a pre-trained YOLO model
-    model = YOLO("E:/Project/Waste_Composition/yolov8n.pt")
+    model = YOLO("E:/Project/Waste_Composition/Backend/yolov8n.pt")
 
     results = model.train(
-        data="E:\Project\Waste_Composition\data\data.yaml",
+        data="E:\Project\Waste_Composition\Backend\data\data.yaml",
         epochs=50,
         batch=16,
         imgsz=640,
