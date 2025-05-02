@@ -10,7 +10,7 @@ const Home = () => {
     <Container maxWidth="md">
       <Box sx={{ textAlign: 'center', my: 8 }}>
         <Typography variant="h3" component="h1" gutterBottom sx={{ fontWeight: 'bold' }}>
-          Waste Classification System
+          Automated Waste Classification System
         </Typography>
         <Typography variant="h5" color="text.secondary" paragraph>
           Upload an image or use your webcam to automatically classify different types of waste
