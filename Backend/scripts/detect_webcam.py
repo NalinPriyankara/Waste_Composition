@@ -3,7 +3,7 @@ import cv2
 
 def run_webcam_detection():
     # Load the trained model
-    model = YOLO("../models/best.pt")  # Path to your trained model
+    model = YOLO("../models/best2.pt")  # Path to your trained model
 
     # Initialize webcam
     cap = cv2.VideoCapture(0)  # 0 is usually the default webcam
