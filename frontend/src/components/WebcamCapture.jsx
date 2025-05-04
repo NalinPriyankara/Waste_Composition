@@ -3,17 +3,20 @@ import Webcam from 'react-webcam';
 import { uploadImage } from '../services/api';
 import { Button, Box, Typography, CircularProgress } from '@mui/material';
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
+import ResultsDisplay from './ResultsDisplay';
 
 const WebcamCapture = () => {
   const webcamRef = useRef(null);
   const [capturedImage, setCapturedImage] = useState(null);
   const [results, setResults] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   const captureAndDetect = async () => {
     const imageSrc = webcamRef.current.getScreenshot();
     setCapturedImage(imageSrc);
     setLoading(true);
+    setError(null);
     
     try {
       // Convert base64 to blob
@@ -26,6 +29,7 @@ const WebcamCapture = () => {
       setResults(data);
     } catch (error) {
       console.error('Detection failed:', error);
+      setError(error.response?.data?.error || 'Detection failed');
     } finally {
       setLoading(false);
     }
@@ -33,7 +37,7 @@ const WebcamCapture = () => {
 
   return (
     <Box sx={{ maxWidth: 800, mx: 'auto', p: 3 }}>
-      <Typography variant="h5" gutterBottom>
+      <Typography variant="h5" gutterBottom align="center">
         Webcam Waste Detection
       </Typography>
       
@@ -44,8 +48,8 @@ const WebcamCapture = () => {
           screenshotFormat="image/jpeg"
           videoConstraints={{ 
             facingMode: 'environment',
-            width: 1280,
-            height: 720
+            width: { ideal: 1280 },
+            height: { ideal: 720 }
           }}
           style={{
             width: '100%',
@@ -60,35 +64,43 @@ const WebcamCapture = () => {
         onClick={captureAndDetect}
         disabled={loading}
         fullWidth
+        size="large"
       >
-        {loading ? <CircularProgress size={24} /> : 'Capture & Detect'}
+        {loading ? (
+          <>
+            <CircularProgress size={24} sx={{ mr: 1 }} />
+            Analyzing...
+          </>
+        ) : (
+          'Capture & Detect'
+        )}
       </Button>
 
-      {capturedImage && (
-        <Box sx={{ mt: 4 }}>
+      {error && (
+        <Typography color="error" sx={{ mt: 2, textAlign: 'center' }}>
+          {error}
+        </Typography>
+      )}
+
+      {results ? (
+        <ResultsDisplay result={results} />
+      ) : capturedImage && (
+        <Box sx={{ mt: 4, textAlign: 'center' }}>
           <Typography variant="h6" gutterBottom>
-            Detection Results
+            Captured Image
           </Typography>
           <img 
-            src={results?.result_url ? `http://localhost:5000${results.result_url}` : capturedImage} 
-            alt="Detection results" 
+            src={capturedImage} 
+            alt="Captured" 
             style={{ 
               maxWidth: '100%',
-              border: '2px solid',
-              borderColor: results ? 'success.main' : 'grey.500',
+              border: '2px solid #ddd',
               borderRadius: '4px'
             }}
           />
-          
-          {results?.detected_classes?.length > 0 ? (
-            <Typography sx={{ mt: 2 }}>
-              Detected: {results.detected_classes.join(', ')}
-            </Typography>
-          ) : (
-            <Typography color="error" sx={{ mt: 2 }}>
-              No waste objects detected
-            </Typography>
-          )}
+          <Typography color="textSecondary" sx={{ mt: 1 }}>
+            Processing detection results...
+          </Typography>
         </Box>
       )}
     </Box>

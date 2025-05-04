@@ -1,13 +1,34 @@
 import React, { useState } from 'react';
 import { uploadImage } from '../services/api';
-import { Button, CircularProgress, Box, Typography, Paper } from '@mui/material';
-import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import { 
+  Button, 
+  CircularProgress, 
+  Box, 
+  Typography, 
+  Paper,
+} from '@mui/material';
+import { 
+  CloudUpload as CloudUploadIcon,
+  Image as ImageIcon
+} from '@mui/icons-material';
+import ResultsDisplay from './ResultsDisplay';
 
 const ImageUpload = () => {
   const [file, setFile] = useState(null);
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [preview, setPreview] = useState(null);
+
+  const handleFileChange = (e) => {
+    const selectedFile = e.target.files[0];
+    if (selectedFile) {
+      setFile(selectedFile);
+      setPreview(URL.createObjectURL(selectedFile));
+      setResult(null); // Clear previous results when new file is selected
+      setError(null); // Clear previous errors
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -30,7 +51,7 @@ const ImageUpload = () => {
 
   return (
     <Paper elevation={3} sx={{ p: 3, maxWidth: 600, mx: 'auto' }}>
-      <Typography variant="h5" gutterBottom>
+      <Typography variant="h5" gutterBottom align="center">
         Upload Waste Image
       </Typography>
       
@@ -40,7 +61,7 @@ const ImageUpload = () => {
           style={{ display: 'none' }}
           id="contained-button-file"
           type="file"
-          onChange={(e) => setFile(e.target.files[0])}
+          onChange={handleFileChange}
         />
         <label htmlFor="contained-button-file">
           <Button
@@ -54,10 +75,35 @@ const ImageUpload = () => {
           </Button>
         </label>
         
-        {file && (
-          <Typography variant="body1" sx={{ mb: 2 }}>
-            Selected: {file.name}
-          </Typography>
+        {file ? (
+          <Box sx={{ mb: 2, textAlign: 'center' }}>
+            <Typography variant="body1" gutterBottom>
+              Selected: {file.name}
+            </Typography>
+            <img 
+              src={preview} 
+              alt="Preview" 
+              style={{ 
+                maxWidth: '100%', 
+                maxHeight: '200px',
+                borderRadius: 4,
+                border: '1px solid #ddd'
+              }} 
+            />
+          </Box>
+        ) : (
+          <Box sx={{ 
+            mb: 2, 
+            textAlign: 'center',
+            p: 4,
+            border: '1px dashed #ddd',
+            borderRadius: 1
+          }}>
+            <ImageIcon color="disabled" sx={{ fontSize: 60 }} />
+            <Typography color="textSecondary">
+              No image selected
+            </Typography>
+          </Box>
         )}
         
         <Button
@@ -66,32 +112,26 @@ const ImageUpload = () => {
           color="primary"
           disabled={!file || loading}
           fullWidth
+          size="large"
         >
-          {loading ? <CircularProgress size={24} /> : 'Analyze Waste'}
+          {loading ? (
+            <>
+              <CircularProgress size={24} sx={{ mr: 1 }} />
+              Analyzing...
+            </>
+          ) : (
+            'Analyze Waste'
+          )}
         </Button>
       </form>
 
       {error && (
-        <Typography color="error" sx={{ mt: 2 }}>
+        <Typography color="error" sx={{ mt: 2, textAlign: 'center' }}>
           {error}
         </Typography>
       )}
 
-      {result && (
-        <Box sx={{ mt: 3 }}>
-          <Typography variant="h6" gutterBottom>
-            Detection Results
-          </Typography>
-          <img 
-            src={`http://localhost:5000${result.result_url}`} 
-            alt="Detection result" 
-            style={{ maxWidth: '100%', borderRadius: 4 }}
-          />
-          <Typography sx={{ mt: 2 }}>
-            Detected: {result.detected_classes.join(', ')}
-          </Typography>
-        </Box>
-      )}
+      {result && <ResultsDisplay result={result} />}
     </Paper>
   );
 };

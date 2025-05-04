@@ -17,18 +17,56 @@ CORS(app)
 
 # Configuration
 PROJECT_ROOT = Path(__file__).parent.resolve()
-MODEL_PATH = PROJECT_ROOT / "models" / "best5.pt"
+MODEL_PATH = PROJECT_ROOT / "models" / "best.pt"
 UPLOAD_FOLDER = PROJECT_ROOT / "data" / "uploads"
 RESULTS_FOLDER = PROJECT_ROOT / "static" / "results"
 
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 os.makedirs(RESULTS_FOLDER, exist_ok=True)
 
+# Define waste categories based on your YAML file
+# Class IDs are assigned in this order: 0:paper, 1:plastic, 2:glass, 3:metal, 4:organic
+RECYCLABLE_CLASS_IDS = [0, 1, 2, 3]  # paper, plastic, glass, metal
+ORGANIC_CLASS_ID = 4  # organic
+
+def classify_waste_type(class_id):
+    """Classify a detected object as organic or recyclable based on class ID"""
+    if class_id == ORGANIC_CLASS_ID:
+        return 'organic'
+    elif class_id in RECYCLABLE_CLASS_IDS:
+        return 'recyclable'
+    return 'other'  # should never happen with your 5 classes
+
+def calculate_waste_percentages(detected_class_ids):
+    """Calculate percentages of organic and recyclable waste"""
+    total = len(detected_class_ids)
+    if total == 0:
+        return {'organic': 0, 'recyclable': 0}
+    
+    organic_count = 0
+    recyclable_count = 0
+    
+    for class_id in detected_class_ids:
+        waste_type = classify_waste_type(class_id)
+        if waste_type == 'organic':
+            organic_count += 1
+        elif waste_type == 'recyclable':
+            recyclable_count += 1
+    
+    return {
+        'organic': round((organic_count / total) * 100, 2),
+        'recyclable': round((recyclable_count / total) * 100, 2)
+    }
+
 # Load YOLO model with verification
 try:
     model = YOLO(str(MODEL_PATH))
     logger.info(f"✓ Model loaded successfully from {MODEL_PATH}")
     logger.info(f"Model classes: {model.names}")
+    # Verify class names match expected order
+    expected_classes = ['paper', 'plastic', 'glass', 'metal', 'organic']
+    if list(model.names.values()) != expected_classes:
+        logger.warning(f"Model classes don't match expected order. Got: {model.names.values()}")
 except Exception as e:
     logger.error(f"✗ Model loading failed: {e}")
     model = None
@@ -85,12 +123,16 @@ def handle_upload():
         # Save with color correction
         save_result_image(plotted_img, result_path)
         
-        # Get only the detected class names
+        # Get the detected class names
         detected_classes = [results[0].names[class_id] for class_id in detected_class_ids]
+        
+        # Calculate waste percentages
+        waste_percentages = calculate_waste_percentages(detected_class_ids)
         
         return jsonify({
             'result_url': f"/static/results/{result_filename}",
             'detected_classes': detected_classes,
+            'waste_percentages': waste_percentages,
             'color_info': {
                 'original_format': 'BGR',
                 'processed_format': 'RGB',
@@ -128,12 +170,16 @@ def handle_webcam_capture():
         # Save with color correction
         save_result_image(plotted_img, result_path)
         
-        # Get only the detected class names
+        # Get the detected class names
         detected_classes = [results[0].names[class_id] for class_id in detected_class_ids]
+        
+        # Calculate waste percentages
+        waste_percentages = calculate_waste_percentages(detected_class_ids)
         
         return jsonify({
             'result_url': f"/static/results/{result_filename}",
-            'detected_classes': detected_classes
+            'detected_classes': detected_classes,
+            'waste_percentages': waste_percentages
         })
         
     except Exception as e:
