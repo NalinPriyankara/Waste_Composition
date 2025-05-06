@@ -25,7 +25,12 @@ const ResultsDisplay = ({ result }) => {
         Detection Results
       </Typography>
       
-      <Box sx={{ mb: 3 }}>
+      <Box sx={{
+        background: 'rgba(255, 255, 255, 0.85)',
+        borderRadius: '12px',
+        padding: '2rem',
+        boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)'
+      }}>
         <img 
           src={`http://localhost:5000${result.result_url}`} 
           alt="Detection result" 

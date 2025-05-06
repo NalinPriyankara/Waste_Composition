@@ -7,14 +7,16 @@ import './App.css';
 
 function App() {
   return (
-    <Router>
-      <Header />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/upload" element={<Upload />} />
-        <Route path="/webcam" element={<Webcam />} />
-      </Routes>
-    </Router>
+    <div className="app-container">
+      <Router>
+        <Header />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/upload" element={<Upload />} />
+          <Route path="/webcam" element={<Webcam />} />
+        </Routes>
+      </Router>
+    </div>
   );
 }
 
