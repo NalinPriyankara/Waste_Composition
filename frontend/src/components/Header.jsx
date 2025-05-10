@@ -27,7 +27,7 @@ const Header = () => {
             padding: 0
           }}
         >
-          WASTE ANALYZER
+          WASTE COMPOSITION
         </Typography>
         
         <div style={{ display: 'flex', gap: '4px' }}> {/* Tight button grouping */}

@@ -78,9 +78,9 @@ const ResultsDisplay = ({ result }) => {
                 primaryTypographyProps={{ fontWeight: 'medium' }}
               />
               <Chip
-                icon={item === 'organic' ? <OrganicIcon /> : <RecycleIcon />}
-                label={item === 'organic' ? 'Organic' : 'Recyclable'}
-                color={item === 'organic' ? 'success' : 'primary'}
+                icon={item === 'Organic' ? <OrganicIcon /> : <RecycleIcon />}
+                label={item === 'Organic' ? 'Organic' : 'Recyclable'}
+                color={item === 'Organic' ? 'success' : 'primary'}
                 size="medium"
                 sx={{ 
                   fontWeight: 'bold',
