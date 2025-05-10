@@ -49,9 +49,9 @@ const WebcamCapture = () => {
   };
 
   return (
-    <Container maxWidth="md" sx={{ py: 4 }}>
+    <Container maxWidth="lg" sx={{ py: 4 }}>
       <Paper elevation={3} sx={{ 
-        p: 4, 
+        p: 2, 
         borderRadius: '16px',
         backgroundColor: 'rgba(255, 255, 255, 0.98)'
       }}>
@@ -68,7 +68,7 @@ const WebcamCapture = () => {
 
         <Box sx={{ 
           position: 'relative', 
-          mb: 4,
+          mb: 3,
           borderRadius: '12px',
           overflow: 'hidden',
           boxShadow: '0 8px 20px rgba(0, 0, 0, 0.15)'
@@ -108,7 +108,7 @@ const WebcamCapture = () => {
               onClick={captureAndDetect}
               disabled={loading}
               sx={{
-                px: 4,
+                px: 3,
                 py: 1.5,
                 borderRadius: '12px',
                 fontSize: '1.1rem',

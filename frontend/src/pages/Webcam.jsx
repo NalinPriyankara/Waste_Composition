@@ -13,12 +13,12 @@ const Webcam = () => {
         url('data:image/svg+xml;utf8,<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="20" fill="none" stroke="%232196F3" stroke-width="0.5" stroke-opacity="0.1"/></svg>')
       `,
       backgroundSize: 'cover, 60px 60px',
-      py: 4
+      py: 0.5
     }}>
-      <Container maxWidth="md">
+      <Container maxWidth="lg">
         <div className="content-card">
           <WebcamCapture />
-          <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
+          <Box sx={{ display: 'flex', justifyContent: 'center' }}>
             <Button
               variant="contained"
               color="primary"

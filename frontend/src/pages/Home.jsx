@@ -9,8 +9,8 @@ const Home = () => {
 
   return (
     <Background>
-      <Container maxWidth="md" sx={{ py: 8 }}>
-        <Box sx={{ textAlign: 'center', my: 8 }}>
+      <Container sx={{ py: 15 }}>
+        <Box sx={{ textAlign: 'center', my: 15 }}>
           <Typography 
             variant="h2" 
             component="h1" 
