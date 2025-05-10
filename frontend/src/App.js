@@ -4,7 +4,7 @@ import Home from './pages/Home';
 import Upload from './pages/Upload'; 
 import Webcam from './pages/Webcam'; 
 import './App.css'; 
- 
+
 function App() { 
   return ( 
     <Router> 
